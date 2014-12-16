@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SOLID sim</title>
+    <link rel="stylesheet/less" type="text/css" href="assets/less/index.less" />
+    <script type="text/javascript" src="traceur-runtime/traceur-runtime.js"></script>
+    <script type="text/javascript" src="less/dist/less.js"></script>
+    <script type="text/javascript" src="rxjs/dist/rx.all.js"></script>
+    <script type="text/javascript" src="angular/angular.js"></script>
+    <script type="text/javascript" src="angular-rx/dist/rx.angular.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+</head>
+<body ng-controller="GameController">
+    <toolbox ng-model="activeTool" tool-list="tools"></toolbox>
+    <board ng-model="myBoard" class="panable zoomable">
+        <tools active="activeTool">
+            <residential></residential>
+            <commercial></commercial>
+            <industrial></industrial>
+        </tools>
+    </board>
+    <annual-report></annual-report>
+    <journal></journal>
+    <disaster></disaster>
+</body>
+</html>
