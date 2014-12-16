@@ -6,50 +6,60 @@ var browserify = require('browserify');
 var fs = require('fs');
 var path = require('path');
 var mkdirp = require('mkdirp');
-
-if (!Array.prototype.concatAll) {
-    Array.prototype.concatAll = function() {
-        return Array.prototype.concat.apply([], this);
-    };
-}
+var through = require('through');
 
 function getAllFiles(dirname) {
     var files = fs.readdirSync(dirname);
+    var arr = [];
 
-    return files.map(function(file) {
+    files.forEach(function(file) {
         var filename = path.join(dirname, file);
         var stat = fs.statSync(filename);
 
-        if (stat.isDirectory()) {
-            return getAllFiles(filename);
+        if (!stat.isDirectory()) {
+            arr.push(filename);
         }
+    });
 
-        return filename;
-    }).concatAll();
+    return arr;
 }
 
 function addImports(file) {
-    var CombinedStream = require('combined-stream');
-    var strm = new CombinedStream();
+    var source = '';
 
-    strm.append(fs.createReadStream(file));
+    var read = function(chunk) {
+        source += chunk;
+    };
 
-    strm.append(getAllFiles(path.resolve(__dirname, 'src', 'app')).map(function(f) {
-        return 'require(' + f + ')';
-    }).join('\n'));
+    var end = function() {
+        var basename = path.basename(file);
+        var dirname = path.dirname(file);
 
-    return strm;
+        this.queue(source);
+
+        if (basename === 'index.js') {
+            this.queue(getAllFiles(dirname).filter(function(file) {
+                return path.basename(file) !== 'index.js';
+            }).map(function(file) {
+                return 'import "./' + path.relative(dirname, file) + '";';
+            }).join('\n'));
+        }
+
+        this.queue(null);
+    };
+
+    return through(read, end);
 }
 
 gulp.task('default', function () {
-    mkdirp.sync('build/app');
+    mkdirp.sync('./build');
 
     return browserify({ debug: true })
-        .transform(es6ify)
         .transform(addImports)
+        .transform(es6ify)
         .require(require.resolve('./src/main.js'), { entry: true })
         .bundle()
-        .pipe(fs.createWriteStream('build/main.js'));
+        .pipe(fs.createWriteStream('./build/main.js'));
 });
 
 gulp.watch('src/**/*.js', ['default']);
