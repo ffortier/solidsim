@@ -1,7 +1,7 @@
 'use strict';
 
-import { BoardController } from './board/boardController';
-import { BoardRenderer } from './renderer/boardRenderer';
+import BoardController from './board/boardController';
+import BoardRenderer from './renderer/boardRenderer';
 
 angular.module('appComponents').directive('board', function(rx, geometryFactory) {
     return {

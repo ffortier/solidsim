@@ -6,16 +6,16 @@ import { ZoomableGeometry } from './geometry/zoomableGeometry';
 
 class GeometryFactory {
     createGeometry(data) {
-        return new BoardGeometry(data);
+        return data && new BoardGeometry(data);
     }
     
     createPanableGeometry(baseGeometry) {
-        return new PanableGeometry(baseGeometry);
+        return baseGeometry && new PanableGeometry(baseGeometry);
     }
 
     createZoomableGeometry(baseGeometry) {
-        return new ZoomableGeometry(baseGeometry);
+        return baseGeometry && new ZoomableGeometry(baseGeometry);
     }
 }
 
-angular.module('appComponents').service('geometryFactory', GeometryFactory);
+angular.module('appServices').service('geometryFactory', GeometryFactory);

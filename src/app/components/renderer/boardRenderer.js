@@ -3,7 +3,7 @@
 /**
  *  Renders a board in canvas
  */
-export class BoardRenderer {
+export default class BoardRenderer {
     constructor($element) {
 
     }

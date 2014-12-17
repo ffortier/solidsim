@@ -1,6 +1,6 @@
 'use strict';
 
-export class BoardController {
+export default class BoardController {
 
     constructor($scope) {
         this.$scope = $scope;

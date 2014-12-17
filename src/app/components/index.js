@@ -1,3 +1,5 @@
 'use strict';
 
-export var appComponents = angular.module('appComponents', []);
+import appServices from '../services';
+
+export default angular.module('appComponents', [appServices.name]);
