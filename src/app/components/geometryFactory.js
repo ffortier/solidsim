@@ -18,4 +18,4 @@ class GeometryFactory {
     }
 }
 
-angular.module('app.components').service('geometryFactory', GeometryFactory);
+angular.module('appComponents').service('geometryFactory', GeometryFactory);

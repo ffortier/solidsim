@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.components').directive('zoomable', function(geometryFactory) {
+angular.module('appComponents').directive('zoomable', function(geometryFactory) {
     return {
         restrict: 'C',
         require: 'ngModel',

@@ -14,7 +14,12 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'build/**/*',
+      'bower_components/traceur-runtime/traceur-runtime.js',
+      'bower_components/angular/angular.js',
+      'bower_components/angular-mocks/angular-mocks.js',
+      'bower_components/rxjs/dist/rx.all.js',
+      'bower_components/angular-rx/dist/rx.angular.js',
+      'build/main.js',
       'src/**/*',
       'test/**/*'
     ],
@@ -22,7 +27,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-      
+      'src/**/*.js',
     ],
 
 
@@ -45,7 +50,7 @@ module.exports = function(config) {
 
 
     // enable / disable watching file and executing tests whenever any file changes
-    autoWatch: false,
+    autoWatch: true,
 
 
     // Start these browsers, currently available:

@@ -3,7 +3,7 @@
 import { BoardController } from './board/boardController';
 import { BoardRenderer } from './renderer/boardRenderer';
 
-angular.module('app.components').directive('board', function(rx, geometryFactory) {
+angular.module('appComponents').directive('board', function(rx, geometryFactory) {
     return {
         restrict: 'E',
         scope: {},

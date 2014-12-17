@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('app.components').directive('panable', function(geometryFactory) {
+angular.module('appComponents').directive('panable', function(geometryFactory) {
     return {
         restrict: 'C',
         require: 'ngModel',

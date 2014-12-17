@@ -1,3 +1,3 @@
 'use strict';
 
-export var ngModule = angular.module('app.controllers', []);
+export var appControllers = angular.module('appControllers', []);
