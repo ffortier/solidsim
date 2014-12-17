@@ -3,7 +3,9 @@
 const EVENTS = ['mousedown', 'mouseup', 'mousemove', 'click', 'dblclick'];
 
 export default class BaseTool {
-    constructor() {
+    constructor(rx) {
+        this.rx = rx;
+
         EVENTS.forEach(function(type) {
             this[type] = function(e) {
                 if (this[type + 'Observer_']) {
@@ -17,16 +19,19 @@ export default class BaseTool {
         var observable = this[type + 'Observable_'];
 
         if (!observable) {
-            this[type + 'Observable_'] = Rx.Observable.create(function(observer) {
+            observable = this[type + 'Observable_'] = this.rx.Observable.create(function(observer) {
                 this[type + 'Observer_'] = observer;
-            });
+            }.bind(this));
         }
+
+        return observable;
     }
 
     release() {
         EVENTS.filter(type => !!this[type + 'Observer_']).forEach(function(type) {
             this[type + 'Observer_'].onCompleted();
-            this[type + 'Observable_'].dispose();
+            this[type + 'Observable_'] = null;
+            this[type + 'Observer_'] = null;
         }.bind(this));
     }
 

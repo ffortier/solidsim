@@ -1,3 +1,3 @@
 'use strict';
 
-export default angular.module('appServices', []);
+export default angular.module('appServices', ['rx']);

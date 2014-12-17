@@ -1,7 +1,7 @@
-describe('boardController', function() {
+describe('geometryFactory', function() {
     'use strict';
 
-    beforeEach(module('appComponents'));
+    beforeEach(module('appServices'));
 
     it('should do something', inject(function(geometryFactory) {
 

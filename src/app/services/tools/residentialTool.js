@@ -3,7 +3,7 @@
 import SectorTool from './sectorTool';
 
 export default class ResidentialTool extends SectorTool {
-    constructor(hi) {
-        super(hi);
+    constructor(rx) {
+        super(rx);
     }
 }
