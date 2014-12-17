@@ -5,8 +5,25 @@ angular.module('appComponents').directive('panable', function(geometryFactory) {
         restrict: 'C',
         require: 'ngModel',
         link: function($scope, $element, $attrs, ngModel) {
-            ngModel.$parsers.push(geometryFactory.createPanableGeometry);
-            ngModel.$formatters.push(geo => geo && geo.baseGeometry);
+            var baseGeometry;
+            var geometry;
+
+            ngModel.$parsers.push(function(val) {
+                return baseGeometry;
+            });
+
+            ngModel.$formatters.push(function(val) {
+                baseGeometry = val;
+                geometry = geometryFactory.createPanableGeometry(val);
+
+                return geometry;
+            });
+
+            $scope.$on('panChange', function(e, val) {
+                if (geometry) {
+                    geometry.pan(val);
+                }
+            });
         }
     };
 });

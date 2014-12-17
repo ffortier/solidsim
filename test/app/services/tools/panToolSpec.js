@@ -15,7 +15,7 @@ describe('panTool', function() {
         var geometry = {};
         var handler = jasmine.createSpy('handler');
 
-        $rootScope.$on('panMove', handler);
+        $rootScope.$on('panChange', handler);
 
         panTool.mousedown(makeMouseEvent('mousedown', sc, geometry, 10, 10));
         panTool.mousemove(makeMouseEvent('mousemove', sc, geometry, 10, 15));
@@ -29,7 +29,7 @@ describe('panTool', function() {
         var geometry = {};
         var handler = jasmine.createSpy('handler');
 
-        $rootScope.$on('panMove', handler);
+        $rootScope.$on('panChange', handler);
         panTool.release();
         panTool.mousedown(makeMouseEvent('mousedown', sc, geometry, 10, 10));
         panTool.mousemove(makeMouseEvent('mousemove', sc, geometry, 10, 15));

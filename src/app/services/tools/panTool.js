@@ -9,7 +9,7 @@ export default class PanTool extends DragDropTool {
     
     activate() {
         this.getDragDrop().subscribe(function (pos) {
-            pos.$scope.$emit('panMove', { left: pos.left, top: pos.top });
+            pos.$scope.$emit('panChange', { left: pos.left, top: pos.top });
         });
     }
 }

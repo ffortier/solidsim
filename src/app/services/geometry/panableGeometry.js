@@ -7,24 +7,13 @@ export class PanableGeometry {
 
     constructor(baseGeometry) {
         this.baseGeometry_ = baseGeometry;
-        this.scrollTop_ = 0;
-        this.scrollLeft_ = 0;
+        this.offsetTop_ = 0;
+        this.offsetLeft_ = 0;
     }
 
-    scrollDown() {
-        this.scrollTop_ += 10;
-    }
-
-    scrollUp() {
-        this.scrollTop_ -= 10;
-    }
-
-    scrollRight() {
-        this.scrollLeft_ -= 10;
-    }
-
-    scrollLeft() {
-        this.scrollLeft_ += 10;
+    pan(val) {
+        this.offsetLeft_ += val.left;
+        this.offsetTop_ += val.top;
     }
 
     compute(x, y) {

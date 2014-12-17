@@ -7,12 +7,8 @@ export class ZoomableGeometry {
         this.zoomRatio_ = 1;
     }
 
-    zoomIn() {
-        this.zoomRatio = Math.min(1, this.zoomRatio + 0.1);
-    }
-
-    zoomOut() {
-        this.zoomRatio = Math.max(0.2, this.zoomRatio - 0.1);
+    zoom(val) {
+        this.zoomRatio = this.zoomRatio + val;
     }
 
     compute(x, y) {
