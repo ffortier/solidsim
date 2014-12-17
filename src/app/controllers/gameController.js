@@ -1,8 +1,10 @@
 'use strict';
 
 class GameController {
-    constructor($scope) {
-        this.$scope = $scope;
+    constructor($scope, toolFactory, gameGenerator) {
+        $scope.toolItems = toolFactory.createAll().map(tool => ({ name: tool.constructor.name, tool: tool }));
+        $scope.activeTool = $scope.toolItems[0].tool;
+        $scope.game = gameGenerator.generate();
     }
 }
 

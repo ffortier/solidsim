@@ -2,6 +2,7 @@
 
 import PanTool from './tools/panTool';
 import ResidentialTool from './tools/residentialTool';
+import HiResidentialTool from './tools/hiResidentialTool';
 
 class ToolFactory {
 
@@ -15,6 +16,18 @@ class ToolFactory {
 
     createResidentialTool() {
         return this.$injector.instantiate(ResidentialTool);
+    }
+
+    createHiResidentialTool() {
+        return this.$injector.instantiate(HiResidentialTool);
+    }
+
+    createAll() {
+        return [
+            this.createPanTool(),
+            this.createResidentialTool(),
+            this.createHiResidentialTool()
+        ];
     }
 
 }

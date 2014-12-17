@@ -1,3 +1,5 @@
 'use strict';
 
-export default angular.module('appControllers', []);
+import appServices from '../services';
+
+export default angular.module('appControllers', [appServices.name]);

@@ -11,10 +11,9 @@
     <script type="text/javascript" src="main.js"></script>
 </head>
 <body ng-controller="GameController">
-    <select ng-options="tool.name for tool in tools" ng-model="activeTool"></select>
-    <board ng-model="myBoard" class="panable zoomable" tool="activeTool"></board>
-    <annual-report></annual-report>
-    <journal></journal>
-    <disaster></disaster>
+    <div>
+        <select ng-options="item.tool as item.name for item in toolItems" ng-model="activeTool"></select>
+    </div>
+    <board ng-model="game" class="panable zoomable" tool="activeTool"></board>
 </body>
 </html>

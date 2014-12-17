@@ -9,8 +9,6 @@ export default class BoardRenderer {
     }
 
     render(geo, cells) {
-        var rect = this.computeRect_(cells);
-        var data = geo.getData();
 
         // TODO
     }
