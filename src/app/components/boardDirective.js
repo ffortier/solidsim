@@ -1,7 +1,5 @@
 'use strict';
 
-import BoardRenderer from './renderer/boardRenderer';
-
 angular.module('appComponents').directive('board', function(rx, geometryFactory) {
     return {
         restrict: 'E',
@@ -10,17 +8,15 @@ angular.module('appComponents').directive('board', function(rx, geometryFactory)
         replace: true,
         require: 'ngModel',
         link: function($scope, $element, $attrs, ngModel) {
-            var renderer = new BoardRenderer($element);
-
             ngModel.$parsers.push(geometryFactory.createGeometry);
             ngModel.$formatters.push(geo => geo && geo.data);
 
             $scope.$on('renderCells', function(e, cells) {
-                renderer.render(ngModel.$viewValue, cells);
+//                renderer.render(ngModel.$viewValue, cells);
             });
 
             ngModel.$render = function() {
-                renderer.render(ngModel.$viewValue);
+  //              renderer.render(ngModel.$viewValue);
             };
         }
     };

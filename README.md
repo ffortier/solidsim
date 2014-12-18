@@ -5,3 +5,4 @@ SOLID implementation of sim city with the following technologies
 * Browserify
 * Gulp
 * Angular
+* RxJS

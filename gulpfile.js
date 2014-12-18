@@ -51,7 +51,7 @@ function addImports(file) {
     return through(read, end);
 }
 
-gulp.task('default', function () {
+gulp.task('main', function() {
     mkdirp.sync('./build');
 
     return browserify({ debug: true })
@@ -61,5 +61,17 @@ gulp.task('default', function () {
         .bundle()
         .pipe(fs.createWriteStream('./build/main.js'));
 });
+
+gulp.task('worker', function() {
+    mkdirp.sync('./build/app/services/statistics');
+
+    return browserify({ debug: true })
+        .transform(es6ify)
+        .require(require.resolve('./src/app/services/statistics/worker.js'), { entry: true })
+        .bundle()
+        .pipe(fs.createWriteStream('./build/app/services/statistics/worker.js'));
+});
+
+gulp.task('default', ['main', 'worker']);
 
 gulp.watch('src/**/*.js', ['default']);
