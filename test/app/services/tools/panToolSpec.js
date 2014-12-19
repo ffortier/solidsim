@@ -1,4 +1,4 @@
-describe('panTool', function() {
+describe('app/services/tools/panTool', function() {
     'use strict';
 
     var panTool;

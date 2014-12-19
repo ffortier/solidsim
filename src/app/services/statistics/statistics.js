@@ -1,36 +1,30 @@
 'use strict';
 
+/**
+ *  Creates an observable on a new worker to compute the statistics on cellUpdate
+ */
 export default function statistics (game, rx, $window, $scope) {
+    var worker = new $window.Worker('app/service/statistics/worker.js');
+    var observers = [];
+
+    worker.onmessage = function(e) {
+        observers.forEach(o => o.onNext(e.data));
+    };
+
+    worker.postMessage(game);
+
+    $scope.$on('cellUpdate', (e, data) => worker.postMessage(data));
+
+    $scope.$on('gameOver', (e) => {
+        observers.forEach(o => o.onCompleted());
+        worker.terminate();
+    });
+
     return rx.Observable.create(function(observer) {
-        var worker = new $window.Worker('app/service/statistics/worker.js');
-
-        var messageHandlers = {
-            next: d => observer.onNext(d),
-            end: () => observer.onCompleted()
-        };
-
-        worker.postMessage({
-            type: 'init',
-            args: [game]
-        });
-
-        $scope.$on('cellUpdate', (e) => worker.postMessage({
-            type: 'cellUpdate',
-            args: Array.prototype.slice.call(arguments, 1)
-        }));
-
-        $scope.$on('gameEnd', (e) => worker.postMessage({
-            type: 'gameEnd',
-            args: []
-        }));
-
-        worker.on('message', function(e) {
-            messageHandlers[e.data.type](...e.args);
-        });
+        observers.push(observer);
 
         return function() {
-            worker.terminate();
+            observers.splice(observers.indexOf(observer), 1);
         };
-
     });
 }

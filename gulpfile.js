@@ -66,6 +66,7 @@ gulp.task('worker', function() {
     mkdirp.sync('./build/app/services/statistics');
 
     return browserify({ debug: true })
+        .add(es6ify.runtime)
         .transform(es6ify)
         .require(require.resolve('./src/app/services/statistics/worker.js'), { entry: true })
         .bundle()

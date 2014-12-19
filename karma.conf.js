@@ -21,7 +21,11 @@ module.exports = function(config) {
       'bower_components/angular-rx/dist/rx.angular.js',
       'build/main.js',
       'src/**/*',
-      'test/**/*'
+      'test/**/*', {
+        pattern: 'build/app/services/statistics/worker.js',
+        included: false,
+        served: true
+      }
     ],
 
 
