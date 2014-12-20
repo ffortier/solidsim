@@ -1,4 +1,4 @@
-describe('app/services/statistics/worker', function() {
+xdescribe('app/services/statistics/worker', function() {
     'use strict';
 
     var worker;

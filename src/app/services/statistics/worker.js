@@ -1,16 +1,13 @@
-'use strict';
+'use svtrict';
 
-import updateHandler from './updateHandler';
+var di = require('di');
 
-class Coco {
+self.workerContext = di.createContext();
 
-}
+import './workerApp';
 
-class Caca extends Coco {
+di.register('self', function() {
+    return self;
+});
 
-}
-
-self.onmessage = function(e) {
-    self.onmessage = updateHandler(e.data);
-    self.postMessage('initialized');
-};
+self.initialize();
