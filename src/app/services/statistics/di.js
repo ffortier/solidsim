@@ -40,6 +40,6 @@ export default {
     inject: function(name, deps) {
         var entry = findEntry(name);
 
-        return instantiate(entry.cls, entry.deps.map(p => typeof deps[p] !== 'undefined' ? deps[p] : objects[p]));
+        return instantiate(entry.cls, entry.deps.map(p => typeof deps[p] !== 'undefined' ? deps[p] : di.inject(p, deps)));
     }
 };
