@@ -1,5 +1,7 @@
 'use strict';
 
+import di from '../di';
+
 class WorkerApp {
     constructor(handlerFactory, self) {
         self.onmessage = function(data) {
@@ -8,4 +10,4 @@ class WorkerApp {
     }
 }
 
-workerContext.register('workerApp', WorkerApp).dependencies('handlerFactory, self')
+di.register('workerApp', WorkerApp);

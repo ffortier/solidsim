@@ -20,12 +20,8 @@ module.exports = function(config) {
       'bower_components/rxjs/dist/rx.all.js',
       'bower_components/angular-rx/dist/rx.angular.js',
       'build/main.js',
-      'src/**/*',
-      'test/**/*', {
-        pattern: 'build/app/services/statistics/worker.js',
-        included: false,
-        served: true
-      }
+      'build/allSpec.js',
+      'src/**/*'
     ],
 
 

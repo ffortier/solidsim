@@ -8,7 +8,15 @@ var path = require('path');
 var mkdirp = require('mkdirp');
 var through = require('through');
 
-function getAllFiles(dirname) {
+function relative(p) {
+    if (p.charAt(0) !== '.') {
+        return './' + p;
+    }
+
+    return p;
+}
+
+function getAllFiles(dirname, recursive) {
     var files = fs.readdirSync(dirname);
     var arr = [];
 
@@ -18,6 +26,8 @@ function getAllFiles(dirname) {
 
         if (!stat.isDirectory()) {
             arr.push(filename);
+        } else if (recursive) {
+            arr.push.apply(arr, getAllFiles(filename, true));
         }
     });
 
@@ -51,6 +61,25 @@ function addImports(file) {
     return through(read, end);
 }
 
+function resolveNgMocksConflicts(file) {
+    var source = '';
+
+    var read = function(chunk) {
+        source += chunk;
+    }
+
+    var end = function() {
+        if (/Spec.js$/.test(file)) {
+            source = source.replace(/\bmodule\(/g, 'angular.mock.module(');
+        }
+
+        this.queue(source);
+        this.queue(null);
+    }
+
+    return through(read, end);
+}
+
 gulp.task('main', function() {
     mkdirp.sync('./build');
 
@@ -73,6 +102,18 @@ gulp.task('worker', function() {
         .pipe(fs.createWriteStream('./build/app/services/statistics/worker.js'));
 });
 
-gulp.task('default', ['main', 'worker']);
+gulp.task('allSpec', function() {
+    mkdirp.sync('./build');
 
-gulp.watch('src/**/*.js', ['default']);
+    return browserify({ debug: true })
+        .add(getAllFiles('./test', true).map(relative))
+        .transform(resolveNgMocksConflicts)
+        .transform(es6ify)
+        .bundle()
+        .pipe(fs.createWriteStream('./build/allSpec.js'));
+
+});
+
+gulp.task('default', ['main', 'worker', 'allSpec']);
+
+gulp.watch(['src/**/*.js', 'test/**/*.js'], ['default']);
