@@ -4,7 +4,7 @@ var objects = {};
 var entries = [];
 
 function getArgumentNames(fn) {
-    return fn.toString().match(/\bfunction\b[^(]*\(([^(]*)\)/)[1].replace(/\s/g, '').split(',');
+    return fn.toString().match(/\bfunction\b[^(]*\(([^(]*)\)/)[1].replace(/\s/g, '').split(',').filter(s => s.length > 0);
 }
 
 function instantiate(Type, args) {
