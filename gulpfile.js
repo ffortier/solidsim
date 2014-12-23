@@ -66,7 +66,7 @@ function resolveNgMocksConflicts(file) {
 
     var read = function(chunk) {
         source += chunk;
-    }
+    };
 
     var end = function() {
         if (/Spec.js$/.test(file)) {
@@ -75,7 +75,7 @@ function resolveNgMocksConflicts(file) {
 
         this.queue(source);
         this.queue(null);
-    }
+    };
 
     return through(read, end);
 }
@@ -96,6 +96,7 @@ gulp.task('worker', function() {
 
     return browserify({ debug: true })
         .add(es6ify.runtime)
+        .transform(addImports)
         .transform(es6ify)
         .require(require.resolve('./src/app/services/statistics/worker.js'), { entry: true })
         .bundle()
@@ -108,6 +109,7 @@ gulp.task('allSpec', function() {
     return browserify({ debug: true })
         .add(getAllFiles('./test', true).map(relative))
         .transform(resolveNgMocksConflicts)
+        .transform(addImports)
         .transform(es6ify)
         .bundle()
         .pipe(fs.createWriteStream('./build/allSpec.js'));

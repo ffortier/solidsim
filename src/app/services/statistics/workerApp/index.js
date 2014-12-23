@@ -2,11 +2,18 @@
 
 import di from '../di';
 
+function noOp() {}
+
 class WorkerApp {
-    constructor(handlerFactory, self) {
+    constructor(handlerChainFactory, self) {
         self.onmessage = function(data) {
-            self.onmessage = handlerFactory.createHandlerChain(data);
-        };
+            this.chains_ = {
+                updateChange: handlerChainFactory.createHandlerChain(data, 'updateChange'),
+                timeUpdate: handlerChainFactory.createHandlerChain(data, 'timeUpdate')
+            };
+
+            self.onmessage = e => (this.chains_[e.data.type] || noOp)(e.data.updates);
+        }.bind(this);
     }
 }
 

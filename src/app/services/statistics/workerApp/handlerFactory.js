@@ -1,21 +1,26 @@
 'use strict';
 
 import di from '../di';
-import policeHandler from './handlers/policeHandler';
+import PoliceHandler from './handlers/policeHandler';
+import ResidentialHandler from './handlers/residentialHandler';
 
-const HANDLERS = [policeHandler];
-
+/**
+ *  Creates all the handlers
+ */
 class HandlerFactory {
-    createHandlerChain(data) {
-        return function(e) {
-            var index = 0;
+    createAll() {
+        return [
+            this.createPoliceHandler(),
+            this.createResidentialHandler()
+        ];
+    }
+    
+    createPoliceHandler() {
+        return new PoliceHandler();
+    }
 
-            (function next() {
-                if (index < HANDLERS.length) {
-                    HANDLERS[index++](data, e.data, next);
-                }
-            })();
-        };
+    createResidentialHandler() {
+        return new ResidentialHandler();
     }
 }
 

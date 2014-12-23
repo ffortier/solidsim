@@ -5,13 +5,13 @@ import '../../../../../src/app/services/statistics/workerApp';
 
 describe('workerApp', function() {
 
-    var self, handlerFactory;
+    var self, handlerChainFactory;
 
     beforeEach(function() {
         self = jasmine.createSpyObj('self', ['postMessage']);
-        handlerFactory = jasmine.createSpyObj('handlerFactory', ['createHandlerChain']);
+        handlerChainFactory = jasmine.createSpyObj('handlerChainFactory', ['createHandlerChain']);
 
-        di.inject('workerApp', { self, handlerFactory });
+        di.inject('workerApp', { self, handlerChainFactory });
     });
 
     it('should do something', function() {
