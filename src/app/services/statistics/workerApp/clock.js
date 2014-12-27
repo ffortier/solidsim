@@ -5,18 +5,19 @@ import di from '../di';
 var events = require('events');
 
 class Clock extends events.EventEmitter {
-    constructor() {
-        this.year_ = 2000;
-        this.month_ = 0;
+    constructor(clockSettings) {
+        this.year_ = clockSettings.year;
+        this.month_ = clockSettings.month;
+        this.speeds_ = clockSettings.speeds;
     }
 
-    start(interval) {
-        this.intervalId_ = setInterval(() => this.emit('tick', this.increment_()), interval);
+    start(speedIndex = 0) {
+        this.intervalId_ = setInterval(() => this.emit('tick', this.increment_()), this.speeds_[speedIndex]);
     }
 
-    change(interval) {
+    change(speedIndex = 0) {
         this.stop();
-        this.start(interval);
+        this.start(speedIndex);
     }
 
     stop() {
@@ -27,6 +28,7 @@ class Clock extends events.EventEmitter {
         if (++this.month_ === 12) {
             this.month_ = 0;
             this.year_ += 1;
+            this.stop();
         }
 
         return { year: this.year_, month: this.month_ };

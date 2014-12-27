@@ -14,6 +14,7 @@ export default function statistics (game, rx, $window, $scope) {
     worker.postMessage(game);
 
     $scope.$on('cellUpdate', (e, data) => worker.postMessage(data));
+    $scope.$on('configUpdate', (e, data) => worker.postMessage(data));
 
     $scope.$on('gameOver', (e) => {
         observers.forEach(o => o.onCompleted());
