@@ -1,4 +1,3 @@
-
 import di from '../../../../../src/app/services/statistics/di';
 import '../../../../../src/app/services/statistics/workerApp/clock';
 

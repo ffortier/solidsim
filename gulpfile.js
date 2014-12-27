@@ -84,6 +84,7 @@ gulp.task('main', function() {
     mkdirp.sync('./build');
 
     return browserify({ debug: true })
+        .add('./src/addons.js')
         .transform(addImports)
         .transform(es6ify)
         .require(require.resolve('./src/main.js'), { entry: true })
@@ -95,6 +96,7 @@ gulp.task('worker', function() {
     mkdirp.sync('./build/app/services/statistics');
 
     return browserify({ debug: true })
+        .add('./src/addons.js')
         .add(es6ify.runtime)
         .transform(addImports)
         .transform(es6ify)
@@ -107,6 +109,7 @@ gulp.task('allSpec', function() {
     mkdirp.sync('./build');
 
     return browserify({ debug: true })
+        .add('./src/addons.js')
         .add(getAllFiles('./test', true).map(relative))
         .transform(resolveNgMocksConflicts)
         .transform(addImports)

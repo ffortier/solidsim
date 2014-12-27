@@ -14,6 +14,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
+      'test/polyfill.js',
       'bower_components/traceur-runtime/traceur-runtime.js',
       'bower_components/angular/angular.js',
       'bower_components/angular-mocks/angular-mocks.js',
@@ -27,7 +28,7 @@ module.exports = function(config) {
 
     // list of files to exclude
     exclude: [
-      'src/**/*.js',
+      'src/**/*.js'
     ],
 
 

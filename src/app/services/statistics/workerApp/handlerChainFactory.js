@@ -10,8 +10,9 @@ class HandlerChainFactory {
     }
 
     create(data, type) {
+        var re = new RegExp('(?:^|\\s)' + RegExp.escape(type) + '(?:\\s|$)');
         var aggregator = this.aggregatorFactory.create();
-        var arr = this.handlers.filter(h => h.type === type).concat(new AggregatorHandlerAdapter(aggregator));
+        var arr = this.handlers.filter(h => re.test(h.type)).concat(new AggregatorHandlerAdapter(aggregator));
 
         return function(updates) {
             var index = 0;
