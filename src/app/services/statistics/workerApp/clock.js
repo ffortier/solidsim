@@ -1,8 +1,7 @@
 'use strict';
 
 import di from '../di';
-
-var events = require('events');
+import events from 'events';
 
 class Clock extends events.EventEmitter {
     constructor(clockSettings) {
