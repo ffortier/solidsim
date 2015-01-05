@@ -3,12 +3,10 @@
 /**
  *  Computes the geometry for a board
  */
-export class BoardGeometry {
+export default class BoardGeometry {
 
-    constructor(data, width, height) {
+    constructor(data) {
         this.data = data;
-        this.width = width;
-        this.height = height;
     }
 
     compute(x, y) {
@@ -22,6 +20,24 @@ export class BoardGeometry {
         var bottomRightBlock = this.compute(x + w, y + h);
 
         console.log(topLeftViewport, bottomRightViewport, topLeftBlock, bottomRightBlock);
+    }
+
+    createView(x1, y1, x2, y2) {
+        var maxX = Math.max(x1, x2);
+        var maxY = Math.max(y1, y2);
+        var cells = [];
+        var last = null;
+
+        for (let x = Math.min(x1, x2); x < maxX; x++) {
+            for (let y = Math.min(y1, y2); y < maxY; y++) {
+                var cell = this.compute(x, y);
+
+                if (cell && (!last || cell.x !== last.x && cell.y !== last.y)) {
+                    cells.push(cell);
+                    last = cell;
+                }
+            }
+        }
     }
 
 }

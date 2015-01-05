@@ -10,12 +10,15 @@ describe('matrix', function() {
     });
 
     it('should iterate through a subset of cells', function() {
-        var arr = [];
+        let arr = [];
+        let uniq = (arr, val) => (~arr.indexOf(val) ? arr : arr.push(val) && arr);
 
         for (let cell of matrix.inRange(2, 2, 4, 4)) {
             arr.push(cell);
         }
 
         expect(arr.length).toBe(9);
+        expect(arr.map(p => p.depth).reduce(uniq, [])).toEqual([5]);
+        expect(arr.map(p => p.water).reduce(uniq, [])).toEqual([0]);
     });
 });

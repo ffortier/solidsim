@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('appComponents').directive('board', function(rx, geometryFactory) {
+angular.module('appComponents').directive('board', function(rx, geometryFactory, rendererFactory) {
     return {
         restrict: 'E',
         scope: {},
@@ -8,15 +8,17 @@ angular.module('appComponents').directive('board', function(rx, geometryFactory)
         replace: true,
         require: 'ngModel',
         link: function($scope, $element, $attrs, ngModel) {
-            ngModel.$parsers.push(geometryFactory.createGeometry);
-            ngModel.$formatters.push(geo => geo && geo.data);
+            let renderer = rendererFactory.create();
+
+            ngModel.$formatters.push(geometryFactory.createGeometry);
+            ngModel.$parsers.push(geo => geo && geo.data);
 
             $scope.$on('renderCells', function(e, cells) {
-//                renderer.render(ngModel.$viewValue, cells);
+                renderer.render(ngModel.$viewValue, cells);
             });
 
             ngModel.$render = function() {
-  //              renderer.render(ngModel.$viewValue);
+                renderer.render(ngModel.$viewValue);
             };
         }
     };

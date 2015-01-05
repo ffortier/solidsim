@@ -1,6 +1,6 @@
 'use strict';
 
-export class ZoomableGeometry {
+export default class ZoomableGeometry {
 
     constructor(baseGeometry) {
         this.baseGeometry_ = baseGeometry;

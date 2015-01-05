@@ -3,7 +3,7 @@
 /**
  *  Allow panning and zooming
  */
-export class PanableGeometry {
+export default class PanableGeometry {
 
     constructor(baseGeometry) {
         this.baseGeometry_ = baseGeometry;

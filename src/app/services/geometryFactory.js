@@ -1,8 +1,17 @@
 'use strict';
 
-import { BoardGeometry } from './geometry/boardGeometry';
-import { PanableGeometry } from './geometry/panableGeometry';
-import { ZoomableGeometry } from './geometry/zoomableGeometry';
+import BoardGeometry from './geometry/boardGeometry';
+import PanableGeometry from './geometry/panableGeometry';
+import ZoomableGeometry from './geometry/zoomableGeometry';
+
+function extendProto(baseGeo, Sub) {
+    var F = function() {};
+    F.prototype = baseGeo;
+    var f = new F();
+    angular.extend(f, Sub.prototype);
+    Sub.call(f, baseGeo);
+    return f;
+}
 
 class GeometryFactory {
     createGeometry(data) {
@@ -10,11 +19,15 @@ class GeometryFactory {
     }
     
     createPanableGeometry(baseGeometry) {
-        return baseGeometry && new PanableGeometry(baseGeometry);
+        if (baseGeometry) {
+            return extendProto(baseGeometry, PanableGeometry);
+        }
     }
 
     createZoomableGeometry(baseGeometry) {
-        return baseGeometry && new ZoomableGeometry(baseGeometry);
+        if (baseGeometry) {
+            return extendProto(baseGeometry, ZoomableGeometry);
+        }
     }
 }
 

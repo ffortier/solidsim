@@ -1,17 +1,16 @@
 'use strict';
 
 import BaseGenerator from './baseGenerator';
-import Noise from 'noisejs';
+import noisejs from 'noisejs';
 import Matrix from './matrix';
 
+var Noise = noisejs.Noise;
 
-function initCellDepth(noise, x, y) {
+function initCellDepth(noise, groundLevel, x, y) {
     // jshint validthis:true
     let val = noise.perlin2(x / 100, y / 100);
-    
-    Math.floor(this.depth_ * val);
 
-    return Math.floor(this.depth_ * val);
+    return Math.min(this.depth_, Math.max(0, Math.floor(this.depth_ * val) + groundLevel));
 }
 
 export default class Generator3D extends BaseGenerator {
@@ -23,10 +22,10 @@ export default class Generator3D extends BaseGenerator {
     }
 
     generate() {
-        let groundLevel = Math.floor(Math.random() * this.depth_ - 1) + 1;
+        let groundLevel = Math.floor(this.depth_ / 2);
         let noise = new Noise(Math.random());
 
-        return new Matrix(this.width_, this.height_, groundLevel, initCellDepth.bind(this, noise));
+        return new Matrix(this.width_, this.height_, groundLevel, initCellDepth.bind(this, noise, groundLevel));
     }
 
 }
