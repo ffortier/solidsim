@@ -119,6 +119,11 @@ gulp.task('allSpec', function() {
 
 });
 
-gulp.task('default', ['main', 'worker', 'allSpec']);
+gulp.task('build', ['main', 'worker', 'allSpec']);
 
-gulp.watch(['src/**/*.js', 'test/**/*.js'], ['default']);
+gulp.task('watch', function() {
+    gulp.watch(['src/**/*.js', 'test/**/*.js'], ['build']);
+});
+
+gulp.task('default', ['build', 'watch']);
+

@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "pretest": "gulp build",
     "test": "karma start karma.conf.js --single-run true --watch false"
   },
   "repository": {
