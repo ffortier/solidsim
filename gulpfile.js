@@ -83,12 +83,25 @@ function resolveNgMocksConflicts(file) {
 gulp.task('main', function() {
     mkdirp.sync('./build');
 
+    var code = '';
+
+    var t = through(function(data) {
+        code += data;
+    }, function() {
+        code = require('derequire')(code);
+
+        this.queue(code);
+        this.queue(null);
+    });
+
     return browserify({ debug: true })
         .add('./src/addons.js')
         .transform(addImports)
         .transform(es6ify)
+        .require(require.resolve('./src/shims/angular.shim.js'), { expose: 'angular' })
         .require(require.resolve('./src/main.js'), { entry: true })
         .bundle()
+        .pipe(t)
         .pipe(fs.createWriteStream('./build/main.js'));
 });
 
